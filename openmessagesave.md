@@ -121,3 +121,73 @@ történjen. Azonban alapértelmezett gombot is tudunk megadni ami az enter gomb
 MessageBox.Show("Kilépsz az alkalmazásból?", "Kilépés", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
 ```
 
+
+
+
+Az egész XAML kód : 
+
+```c#
+<Window x:Class="OpenSaveMessage.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="OpenSaveMessage" Height="450" Width="800">
+    <Grid>
+        <Menu VerticalAlignment="Top">
+            <MenuItem Header="Fájl">
+                <MenuItem Header="Megnyitás" Click="OpenFile_Click"/>
+                <MenuItem Header="Mentés" Click="SaveFile_Click"/>
+                <MenuItem Header="Kilépés" Click="Exit_Click"/>
+            </MenuItem>
+        </Menu>
+        <TextBox Name="TextTextBox" VerticalScrollBarVisibility="Auto" Margin="10"/>
+    </Grid>
+</Window>
+```
+
+
+Az egész .xaml.cs kód : 
+
+```c#
+public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void OpenFile_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Szövegfájlok (*.txt)|*.txt"
+            };
+            if (openFileDialog.ShowDialog() == true)
+            {
+                TextTextBox.Text = File.ReadAllText(openFileDialog.FileName);
+            }
+        }
+
+        private void SaveFile_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "Szövegfájlok (*.txt)|*.txt"
+            };
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                File.WriteAllText(saveFileDialog.FileName, TextTextBox.Text);
+                MessageBox.Show("Fájl sikeresen mentve!", "Mentés", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Biztosan ki akar lépni?", "Kilépés", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
+            {
+                Application.Current.Shutdown();
+            }
+        }
+    }
+```
+
