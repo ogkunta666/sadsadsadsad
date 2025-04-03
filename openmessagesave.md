@@ -4,7 +4,7 @@
 
 Egy menthető és betölthető TextBox ahol MenuStrip-ben lehet kiválasztani hogy mit szeretnél csinálni a fájllal , és a kilépés előtt egy megerősítést kér a felhasználótól.
 
-# Grid : 
+# Grid  felépítése : 
 
 Egy Menu benne MenuItemekkel aminél különböző metódusok vannak meghívva kattintás esetén a gombhoz megfelelően , és egy TextBox hogy valamit lehessen is csinálni.
 
@@ -88,9 +88,7 @@ de más fájlokon alapuló programokban vagy nagyobb hibaüzenet esetén ez kife
 
 Ha a felhasználó kiakar lépni akkor megerősítésre várunk.
 Erre nagy segítség a MessageBoxResult ami pedig vagy igen vagy nem lehet. Igen kattintás esetén a program leáll ha nem akkor minden megy tovább.
-Azonban ha a felhasználó máshova kattint a kelleténél akkor egy figyelmeztető hangot játszik le. Ehhez szükséges az is hogy a program elejére
-felvegyük a "using Microsoft.Win32"-t.
-
+Az ablakban egy Warning kép is megjelenik még.
 ```c#
  private void Exit_Click(object sender, RoutedEventArgs e)
         {
@@ -102,7 +100,24 @@ felvegyük a "using Microsoft.Win32"-t.
         }
 ```
 
-A MessageBoxButton.YesNo hozzá ad a messageboxhoz kettő gombot ami vagy igen vagy nem ez azért fontos hogy a resultot áttudjuk adni az ifnek és annak következménye 
-történjen.
+Az ifben lévő rész olyan mintha az AltF4-et nyomnánk meg mert az bezárja a perpillanat futó alkalmazást.
 
-Az ifben lévő rész pedig olyan mintha az AltF4-et nyomnánk meg mert az bezárja a perpillanat futó alkalmazást.
+# A MessageBox elérhető paraméterjei : 
+
+ 1. elem : szöveg , ami megjelenik a messagebox-ban
+ 2. elem : szöveg , ami a messagebox címe
+ 3. elem : gombok amik az alábbiak lehetnek : OK , OKCancel , YesNo , YesNoCancel
+
+Ikonok : 
+1. ikon : Information , információs ikon jelenik meg
+2. ikon : Warning figyelmeztető ikon jelenik meg
+3. ikon : Error , hiba ikon jelenik meg
+4. ikon : Question egy kérdőjel jelenik meg
+
+A MessageBoxButton.YesNo hozzá ad a messageboxhoz kettő gombot ami vagy igen vagy nem ez azért fontos hogy a resultot áttudjuk adni az ifnek és annak következménye 
+történjen. Azonban alapértelmezett gombot is tudunk megadni ami az enter gomb megnyomására egyből a result lesz.
+
+```c#
+MessageBox.Show("Kilépsz az alkalmazásból?", "Kilépés", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+```
+
